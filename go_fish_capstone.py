@@ -9,14 +9,16 @@ wn.bgcolor("black")
 wn.setup(600,800)
 wn.tracer(0)
 
-#score
-score = 0
 
 #52 cards, 13 of each suit (clubs, diamonds, hearts, and spades)
 
 class Card():
     def __init__(self, suit, value):
         self.suit = suit
+        if suit == "H" or suit == "D":
+            self.color = "R"
+        else:
+            self.color = "B"
         self.value = value
         
 class Deck():
@@ -29,40 +31,68 @@ class Deck():
             for value in values:
                 card = Card(suit, value)
                 self.cards.append(card)
-            
-deck = Deck()
-
-for card in deck.cards:
-    deck =(card.value, card.suit)
-    print(card.value, card.suit)
-
-user_deck = deck
-enemy_deck = deck
-
-
-
-
-#heading for pen
-pen = turtle.Turtle()
-pen.color("white")
-pen.speed(0)
-pen.penup()
-pen.goto(0, 250)
-pen.hideturtle()
-pen.write("Go fish", move = False, align = "center", font = ("Arial", "32", "normal"))
-
-#creating the card
-player = turtle.Turtle()
-player.color("white")
-player.shape("square")
-player.speed(0)
-player.penup()
-player.setheading(90)
-player.goto(0, -275)
-player.dx = 0
+                
+    def shuffle(self):
+        random.shuffle(self.cards)
         
-while True:
-    wn.update()
+    def get_card(self):
+        return self.cards.pop()
+    
+class Player():
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
+        self.hand = []
+        self.guess = False
+        
+class Enemy():
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
+        self.hand = []
+        self.guess = False
+
+# Create objects
+deck = Deck()
+deck.shuffle()
+
+
+player = Player("Khadeeja")
+enemy = Enemy("Rukaiya")
+
+for _ in range(7):
+    card = deck.get_card()
+    player.hand.append(card)
+    
+for _ in range(7):
+    card = deck.get_card()
+    enemy.hand.append(card)
+    
+for i in range(7):
+    card = player.hand[i]
+    print(card.suit, card.value)
+
+for i in range(7):
+    card = enemy.hand[i]
+    print(card.suit, card.value)
+
+    
+def play(player,enemy,deck):
+    turn = 0
+    size = 7
+    deal = 0
+    order = [player, enemy]
+    
+    while len(deck) != 0:
+        for player in order:
+            hand = player.name + "'s hand"
+            for card in player.hand:
+                hand += random.card
+                
+                
+            
+                
+        
 
 
 
